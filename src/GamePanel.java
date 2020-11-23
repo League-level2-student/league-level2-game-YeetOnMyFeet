@@ -20,6 +20,9 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener{
 	    Font titleFont;
 	    Font titleFont2;
 	    Timer frameDraw;
+	    Jet jet1 = new Jet(250, 250, 50, 50);
+	    Jet jet2 = new Jet(100, 100, 50, 50);
+	    ObjectManager manager = new ObjectManager(jet1, jet2);
 	    public static BufferedImage image;
 	    public static boolean needImage = true;
 	    public static boolean gotImage = false;	
@@ -58,7 +61,9 @@ public void	 updateMenuState() {
 	
 }
 public void	 updateGameState() {  
-	
+	//jet1.jetUpdate();
+	//jet2.jetUpdate();
+	manager.update();
 }
 public void	 updateEndState()  {  
 	
@@ -75,13 +80,13 @@ public void drawMenuState(Graphics g) {
 	g.drawString("Press SPACE for instructions", 60, 550);
 }
 public void drawGameState(Graphics g) { 
-	//if (needImage) {
-	   // loadImage ("space.png");
-	//}
+	if (needImage) {
+	    loadImage ("jetphoto.png");
+	}
 	g.setColor(Color.gray);
 	g.drawImage(image,0, 0, null);
 	g.fillRect(0, 0, JetFighter.WIDTH, JetFighter.HEIGHT);
-	//manager.draw(g);
+	manager.draw(g);
 	//manager.getScore();
 	g.setColor(Color.YELLOW);
 	g.setFont(titleFont);
@@ -136,6 +141,35 @@ public void keyPressed(KeyEvent e) {
 	        currentState++;
 	    }
 	}
+	if (e.getKeyCode()==KeyEvent.VK_SPACE) {
+		manager.addProjectile(jet1.getProjectile());
+	}
+	if (e.getKeyCode()==KeyEvent.VK_UP) {
+	    jet1.up = true;
+	    jet1.down = false;
+	    jet1.right= false;
+	    jet1.left = false;
+	}
+	if (e.getKeyCode()==KeyEvent.VK_LEFT) {
+	    jet1.left = true;
+	    jet1.up = false;
+	    jet1.down = false;
+	    jet1.right= false;
+	}
+	if (e.getKeyCode()==KeyEvent.VK_RIGHT) {
+		jet1.right= true;
+		jet1.up = false;
+	    jet1.down = false;
+	    jet1.left = false;
+	}
+	if (e.getKeyCode()==KeyEvent.VK_DOWN) {
+	    jet1.down = true;
+	    jet1.right= false;
+	    jet1.left = false;
+	    jet1.up = false;
+	}
+	
+	
 }
 @Override
 public void keyReleased(KeyEvent e) {

@@ -6,18 +6,33 @@ import javax.imageio.ImageIO;
 
 public class Jet extends GameObject{
 boolean right, left, up, down;
-public static BufferedImage image;
+public static BufferedImage imageup;
+public static BufferedImage imageright;
+public static BufferedImage imagedown;
+public static BufferedImage imageleft;
+public static BufferedImage image2up;
+public static BufferedImage image2right;
+public static BufferedImage image2down;
+public static BufferedImage image2left;
 public static boolean needImage = true;
 public static boolean gotImage = false;	
+String direction;
 	public Jet(int x, int y, int width, int height) {
 		super(x, y, width, height);
 		// TODO Auto-generated constructor stub
-		speed = 10;
+		speed = 1;
 		if (needImage) {
-		    loadImage ("rocket.png");
+		    loadImage ("jetphoto.png", imageup);
+		    loadImage ("jetphotoright.png", imageright);
+		    loadImage ("jetphotleft.png", imageleft);
+		    loadImage ("jetphotodown.png", imagedown);
+		    loadImage ("jet2up.png", image2up);
+		    loadImage ("jet2right.png", image2right);
+		    loadImage ("jet2left.png", image2left);
+		    loadImage ("jet2down.png", image2down);
 		}
 	}
-	void loadImage(String imageFile) {
+	void loadImage(String imageFile, BufferedImage image) {
 	    if (needImage) {
 	        try {
 	            image = ImageIO.read(this.getClass().getResourceAsStream(imageFile));
@@ -41,6 +56,10 @@ public void draw(Graphics g) {
     	}
 }
 	
+public void jetUpdate() {
+	x+=speed;
+    super.update();
+}
 public void right() {
 	if (checkMove(x+speed, y)) {
 		x+=speed;
@@ -72,15 +91,38 @@ public boolean checkMove(int x, int y) {
 }
 public void update() {
 	if (right) {
+		loadImage ("jetphotoright.png");
 		right();
 	}
 	if (left) {
+		loadImage ("jetphotoleft.png");
 		left();
 	}
 	if (up) {
+		loadImage ("jetphoto.png");
 		up();
 	}
 	if (down) {
+		loadImage ("jetphotodown.png");
+		down();
+	}
+	super.update();
+}
+public void update2() {
+	if (right) {
+		loadImage ("jet2right.png");
+		right();
+	}
+	if (left) {
+		loadImage ("jet2left.png");
+		left();
+	}
+	if (up) {
+		loadImage ("jet2up.png");
+		up();
+	}
+	if (down) {
+		loadImage ("jet2down.png");
 		down();
 	}
 	super.update();
