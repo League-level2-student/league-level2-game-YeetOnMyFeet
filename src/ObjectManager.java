@@ -8,8 +8,10 @@ public class ObjectManager {
 	Jet jet1;
 	Jet jet2;
 	 ArrayList<Projectile>  projectiles;
+	 ArrayList<Projectile>  projectiles2;
 	 Random random = new Random();
 	 int score = 0;
+	 int score2 = 0;
 	 
 public ObjectManager(Jet jet, Jet jet2) {
 		// TODO Auto-generated constructor stub
@@ -26,8 +28,7 @@ public void addProjectile(Projectile projectile) {
 
 public void update() {
 	jet1.update();
-	jet2.update2();
-	
+	jet2.update();
 
 	for (int i = 0; i < projectiles.size(); i++) {
 		 Projectile currentProjectile = projectiles.get(i);
@@ -62,20 +63,24 @@ public void purgeObjects() {
 }
 public void checkCollision() {
 	
+		for (int j = 0; j < projectiles.size(); j++) {
+			if (jet1.collisionBox.intersects(projectiles.get(j).collisionBox)) {
+				projectiles.get(j).setIsActive(false);
+				score += 1;
+				System.out.println(score);
+				System.out.println("Projectile collision");
+			}
+		}
 		
-		//for (int j = 0; j < projectiles.size(); j++) {
-			//if (JetFighter.get(i).collisionBox.intersects(projectiles.get(j).collisionBox)) {
-				//projectiles.get(j).setIsActive(false);
-				//JetFighter.get(i).setIsActive(false);
-				//score += 1;
-				//System.out.println(score);
-				//System.out.println("Projectile collision");
-			//}
-		//}
+
+		
 	}
 
 public int getScore() {
 	return score;
+}
+public int getScore2() {
+	return score2;
 }
 
 

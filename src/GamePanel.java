@@ -20,8 +20,8 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener{
 	    Font titleFont;
 	    Font titleFont2;
 	    Timer frameDraw;
-	    Jet jet1 = new Jet(250, 250, 50, 50);
-	    Jet jet2 = new Jet(100, 100, 50, 50);
+	    Jet jet1 = new Jet(250, 250, 50, 50, "1");
+	    Jet jet2 = new Jet(100, 100, 50, 50,"2");
 	    ObjectManager manager = new ObjectManager(jet1, jet2);
 	    public static BufferedImage image;
 	    public static boolean needImage = true;
@@ -87,10 +87,14 @@ public void drawGameState(Graphics g) {
 	g.drawImage(image,0, 0, null);
 	g.fillRect(0, 0, JetFighter.WIDTH, JetFighter.HEIGHT);
 	manager.draw(g);
-	//manager.getScore();
-	g.setColor(Color.YELLOW);
+	manager.getScore();
+	g.setColor(Color.BLACK);
 	g.setFont(titleFont);
-	//g.drawString("" + manager.getScore(), 50, 80);
+	g.drawString("" + manager.getScore(), 50, 80);
+	manager.getScore2();
+	g.setColor(Color.WHITE);
+	g.setFont(titleFont);
+	g.drawString("" + manager.getScore2(), 400, 80);
 }
 public void drawEndState(Graphics g)  { 
 	g.setColor(Color.RED);
@@ -142,8 +146,36 @@ public void keyPressed(KeyEvent e) {
 	    }
 	}
 	if (e.getKeyCode()==KeyEvent.VK_SPACE) {
-		manager.addProjectile(jet1.getProjectile());
+		
+		if (jet1.up) {
+			manager.addProjectile(jet1.getProjectile("up"));
+		}
+		else if(jet1.left) {
+			manager.addProjectile(jet1.getProjectile("left"));
+		}
+		else if(jet1.right) {
+			manager.addProjectile(jet1.getProjectile("right"));
+		}
+		else if(jet1.down) {
+			manager.addProjectile(jet1.getProjectile("down"));
+		}
 	}
+	if (e.getKeyCode()==KeyEvent.VK_Q) {
+		
+		if (jet2.up) {
+			manager.addProjectile(jet2.getProjectile("up"));
+		}
+		else if(jet2.left) {
+			manager.addProjectile(jet2.getProjectile("left"));
+		}
+		else if(jet2.right) {
+			manager.addProjectile(jet2.getProjectile("right"));
+		}
+		else if(jet2.down) {
+			manager.addProjectile(jet2.getProjectile("down"));
+		}
+	}
+	
 	if (e.getKeyCode()==KeyEvent.VK_UP) {
 	    jet1.up = true;
 	    jet1.down = false;
@@ -168,7 +200,30 @@ public void keyPressed(KeyEvent e) {
 	    jet1.left = false;
 	    jet1.up = false;
 	}
-	
+	if (e.getKeyCode()==KeyEvent.VK_W) {
+		jet2.up = true;
+	    jet2.down = false;
+	    jet2.right= false;
+	    jet2.left = false;
+	}
+	if (e.getKeyCode()==KeyEvent.VK_A) {
+	    jet2.left = true;
+	    jet2.up = false;
+	    jet2.down = false;
+	    jet2.right= false;
+	}
+	if (e.getKeyCode()==KeyEvent.VK_D) {
+		jet2.right= true;
+		jet2.up = false;
+	    jet2.down = false;
+	    jet2.left = false;
+	}
+	if (e.getKeyCode()==KeyEvent.VK_S) {
+	    jet2.down = true;
+	    jet2.right= false;
+	    jet2.left = false;
+	    jet2.up = false;
+	}
 	
 }
 @Override
