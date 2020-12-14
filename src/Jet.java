@@ -17,7 +17,7 @@ public class Jet extends GameObject {
 	public Jet(int x, int y, int width, int height, String player) {
 		super(x, y, width, height);
 		// TODO Auto-generated constructor stub
-		speed = 1;
+		speed = 2;
 		 up = true;
 		 this.player = player;
 		 loadImages();

@@ -9,6 +9,7 @@ import java.awt.image.BufferedImage;
 
 import javax.imageio.ImageIO;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
@@ -78,6 +79,7 @@ public void drawMenuState(Graphics g) {
 	g.drawString("Press ENTER to start", 100, 350);
 	g.setFont(titleFont2);
 	g.drawString("Press SPACE for instructions", 60, 550);
+	
 }
 public void drawGameState(Graphics g) { 
 	if (needImage) {
@@ -95,6 +97,13 @@ public void drawGameState(Graphics g) {
 	g.setColor(Color.WHITE);
 	g.setFont(titleFont);
 	g.drawString("" + manager.getScore2(), 400, 80);
+	if (manager.getScore() == 100) {
+		currentState = END;
+	}
+	else if (manager.getScore2() == 100) {
+		currentState = END;
+	}
+	
 }
 public void drawEndState(Graphics g)  { 
 	g.setColor(Color.RED);
@@ -102,10 +111,13 @@ public void drawEndState(Graphics g)  {
 	g.setFont(titleFont);
 	g.setColor(Color.BLACK);
 	g.drawString("Game Over", 110, 100);
+	g.setColor(Color.YELLOW);
 	g.setFont(titleFont2);
-	//g.drawString("You killed " + ""+ + manager.getScore() + " enemies", 100, 350);
+	g.drawString("Jet1(black) shot " + ""+ + manager.getScore() + " bullets", 100, 350);
+	g.drawString("Jet2(gray) shot " + ""+ + manager.getScore2() + " bullets", 100, 450);
+	g.setColor(Color.BLACK);
 	g.setFont(titleFont2);
-	g.drawString("Press ENTER to start", 100, 550);
+	g.drawString("Press ENTER to start", 85, 650);
 	
 }
 	
@@ -115,6 +127,7 @@ public void actionPerformed(ActionEvent e) {
 	// TODO Auto-generated method stub
 	if(currentState == MENU){
 	    updateMenuState();
+	    
 	}else if(currentState == GAME){
 	    updateGameState();
 	}else if(currentState == END){
@@ -130,10 +143,8 @@ public void keyTyped(KeyEvent e) {
 @Override
 public void keyPressed(KeyEvent e) {
 	// TODO Auto-generated method stub
-	if(e.getKeyCode()==KeyEvent.VK_SPACE) {
-		System.out.println("Space");
 	
-	}
+	    
 	if (e.getKeyCode()==KeyEvent.VK_ENTER) {
 		System.out.println("ENTER");
 		startGame();
@@ -146,6 +157,11 @@ public void keyPressed(KeyEvent e) {
 	    }
 	}
 	if (e.getKeyCode()==KeyEvent.VK_SPACE) {
+		if (currentState == MENU) {
+			JOptionPane.showMessageDialog(null, "Control your jet to shoot bullets at the other jet. Press q or space to shoot. WASD or ARROW keys to move. First to 100 wins! Have fun!");
+		}
+		else if (currentState == GAME) {
+			
 		
 		if (jet1.up) {
 			manager.addProjectile(jet1.getProjectile("up"));
@@ -160,19 +176,20 @@ public void keyPressed(KeyEvent e) {
 			manager.addProjectile(jet1.getProjectile("down"));
 		}
 	}
+	}
 	if (e.getKeyCode()==KeyEvent.VK_Q) {
 		
 		if (jet2.up) {
-			manager.addProjectile(jet2.getProjectile("up"));
+			manager.addProjectile2(jet2.getProjectile("up"));
 		}
 		else if(jet2.left) {
-			manager.addProjectile(jet2.getProjectile("left"));
+			manager.addProjectile2(jet2.getProjectile("left"));
 		}
 		else if(jet2.right) {
-			manager.addProjectile(jet2.getProjectile("right"));
+			manager.addProjectile2(jet2.getProjectile("right"));
 		}
 		else if(jet2.down) {
-			manager.addProjectile(jet2.getProjectile("down"));
+			manager.addProjectile2(jet2.getProjectile("down"));
 		}
 	}
 	
@@ -223,9 +240,9 @@ public void keyPressed(KeyEvent e) {
 	    jet2.right= false;
 	    jet2.left = false;
 	    jet2.up = false;
-	}
+	}}
 	
-}
+
 @Override
 public void keyReleased(KeyEvent e) {
 	// TODO Auto-generated method stub
