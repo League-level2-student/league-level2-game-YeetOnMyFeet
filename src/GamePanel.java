@@ -148,6 +148,12 @@ public void keyPressed(KeyEvent e) {
 	if (e.getKeyCode()==KeyEvent.VK_ENTER) {
 		System.out.println("ENTER");
 		startGame();
+		manager.score = 0;
+		manager.score2 = 0;
+		  jet1 = new Jet(250, 250, 50, 50, "1");
+		     jet2 = new Jet(100, 100, 50, 50,"2");
+		     manager = new ObjectManager(jet1, jet2);
+		
 	    if (currentState == END) {
 	        currentState = MENU;
 	        
